@@ -5,8 +5,8 @@ import java.time.format.DateTimeParseException;
 public abstract class TaskWithDateTime extends Task {
     private String dateTime;
 
-    TaskWithDateTime(String type, String description, String dateTime, String isDone) throws EmptyDescriptionException {
-        super(type, description, isDone);
+    TaskWithDateTime(String description, String dateTime, String isDone) {
+        super(description, isDone);
         try {
             this.dateTime = this.parseStringFormatDateTime(dateTime);
         } catch (DateTimeParseException e) {

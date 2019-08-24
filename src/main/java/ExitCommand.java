@@ -7,7 +7,7 @@ public class ExitCommand extends Command {
     }
 
     @Override
-    void execute(TaskList taskList, Ui ui, Storage storage) throws JermiException, IOException {
+    void execute(TaskList taskList, Ui ui, Storage storage) throws JermiException {
         ui.exit();
     }
 

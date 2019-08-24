@@ -1,11 +1,11 @@
 public class ToDo extends Task {
 
-    ToDo(String description) throws EmptyDescriptionException {
+    ToDo(String description) {
         this(description, "0");
     }
 
-    ToDo(String description, String isDone) throws EmptyDescriptionException {
-        super("a todo", description, isDone);
+    ToDo(String description, String isDone) {
+        super(description, isDone);
     }
 
     @Override

@@ -9,7 +9,7 @@ public class ListCommand extends Command {
     }
 
     @Override
-    void execute(TaskList taskList, Ui ui, Storage storage) throws JermiException, IOException {
+    void execute(TaskList taskList, Ui ui, Storage storage) throws JermiException {
         List<String> tasks = taskList
                 .getList()
                 .stream()

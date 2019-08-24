@@ -10,8 +10,8 @@ public class AddCommand extends Command {
         this.description = description;
     }
 
-    private Task createTask() throws EmptyDescriptionException {
-        Task task;
+    private Task createTask() {
+        Task task = null;
         switch (this.taskType) {
         case TO_DO:
             task = new ToDo(this.description);
@@ -29,14 +29,13 @@ public class AddCommand extends Command {
                 task = new Event(activity, dateTime);
                 break;
             }
-        default:
-            task = null;
+            break;
         }
         return task;
     }
 
     @Override
-    void execute(TaskList taskList, Ui ui, Storage storage) throws JermiException, IOException {
+    void execute(TaskList taskList, Ui ui, Storage storage) throws JermiException {
         Task task = this.createTask();
         taskList.add(task);
         int numOfTasks = taskList.getSize();

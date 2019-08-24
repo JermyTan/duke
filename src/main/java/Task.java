@@ -2,10 +2,7 @@ public abstract class Task {
     private String description;
     private boolean isDone;
 
-    Task(String type, String description, String isDone) throws EmptyDescriptionException {
-        if (description.isEmpty()) {
-            throw new EmptyDescriptionException(type);
-        }
+    Task(String description, String isDone) {
         this.description = description;
         this.isDone = isDone.equals("1");
     }

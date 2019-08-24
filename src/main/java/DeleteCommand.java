@@ -1,16 +1,20 @@
 import java.io.IOException;
-import java.util.List;
 
 public class DeleteCommand extends Command {
     private int ordering;
 
-    DeleteCommand(int ordering) {
+    DeleteCommand(String ordering) throws JermiException {
         super();
-        this.ordering = ordering;
+
+        try {
+            this.ordering = Integer.parseInt(ordering);
+        } catch (NumberFormatException e) {
+            throw new NotANumberException();
+        }
     }
 
     @Override
-    void execute(TaskList taskList, Ui ui, Storage storage) throws JermiException, IOException {
+    void execute(TaskList taskList, Ui ui, Storage storage) throws JermiException {
         Task task = taskList.getTask(ordering);
         taskList.remove(ordering);
         int numOfTasks = taskList.getSize();

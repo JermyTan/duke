@@ -7,13 +7,13 @@ public class Storage {
     private File file;
     private TaskList taskList;
 
-    Storage(String pathName, TaskList taskList) throws IOException, EmptyDescriptionException {
+    Storage(String pathName, TaskList taskList) throws JermiException {
         this.taskList = taskList;
         this.file = new File(pathName);
         this.fileToTaskList();
     }
 
-    private Task fileFormatToTask(String fileFormat) throws EmptyDescriptionException {
+    private Task fileFormatToTask(String fileFormat) {
         Task task = null;
         String[] components = fileFormat.split("\\|");
 
@@ -31,20 +31,28 @@ public class Storage {
         return task;
     }
 
-    private void fileToTaskList() throws EmptyDescriptionException, IOException {
-        List<String> lines = Files.readAllLines(this.file.toPath());
-        for (String line : lines) {
-            this.taskList.add(this.fileFormatToTask(line));
+    private void fileToTaskList() throws JermiException {
+        try {
+            List<String> lines = Files.readAllLines(this.file.toPath());
+            for (String line : lines) {
+                this.taskList.add(this.fileFormatToTask(line));
+            }
+        } catch (IOException e) {
+            throw new ReadingException(e.getMessage());
         }
     }
 
-    void taskListToFile() throws IOException {
-        String toWrite = "";
-        for (Task task : this.taskList.getList()) {
-            toWrite += task.toSaveFormat();
-            toWrite += "\n";
+    void taskListToFile() throws JermiException {
+        try {
+            StringBuilder toWrite = new StringBuilder();
+            for (Task task : this.taskList.getList()) {
+                toWrite.append(task.toSaveFormat());
+                toWrite.append("\n");
+            }
+            Files.writeString(this.file.toPath(), toWrite.toString());
+        } catch (IOException e) {
+            throw new WritingException(e.getMessage());
         }
-        Files.writeString(this.file.toPath(), toWrite);
     }
 
 
